@@ -48,7 +48,7 @@ private:
 	Ogre::SceneManager * scnMgr;
 
 	//Fmod------------------
-
+	FMOD::Studio::System *studioSystem;
 	FMOD::System     *system;
 	FMOD_RESULT       result;
 

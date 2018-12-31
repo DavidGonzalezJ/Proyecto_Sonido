@@ -24,6 +24,7 @@ private:
 	FMOD::DSP* channelHead;
 	
 	FMOD::System* system;
+	FMOD::Studio::System* studioSystem;
 
 	std::vector<FMOD::DSPConnection*> reverbConnectionfx;
 	std::vector<FMOD::Channel*> cFx;

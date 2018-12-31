@@ -136,20 +136,30 @@ bool Juego::initOgre(){
 
 	return true;
 }
+
+//Ahora el juego estará sonorizado en 3D
 bool Juego::initFmod() {
+	//Creamos el system de alto nivel
+	FMOD::Studio::System::create(&studioSystem);
+
+	//Sacamos el low level system
 	unsigned int      version;
-	//result = FMOD::System::create(&system);
-	result = FMOD::System_Create(&system);
+	studioSystem->getLowLevelSystem(&system);
 	result = system->getVersion(&version);
+
+	//Inicializamos los systems
+	system->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0);
 
 	if (version < FMOD_VERSION)
 	{
 		std::cout << ("FMOD lib version %08x doesn't match header version %08x", version, FMOD_VERSION);
 	}
-	//system->initialize(100, FMOD_INIT_NORMAL, NULL, NULL);
-	system->init(100, FMOD_INIT_NORMAL, NULL);
+
+	studioSystem->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, NULL);
 	return true;
 }
+
+
 bool Juego::run(){
 
 		restart_ = false;
