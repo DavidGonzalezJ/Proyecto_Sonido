@@ -94,7 +94,7 @@
     <OutDir>$(SolutionDir)Exes\</OutDir>
     <TargetName>$(SolutionName)D</TargetName>
     <IntDir>$(SolutionDir)Inter\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\VLD\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\FMODstudio\inc;$(SolutionDir)Dependencies\VLD\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\VLD\lib\Win64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -102,6 +102,7 @@
     <OutDir>$(SolutionDir)Exes\</OutDir>
     <TargetName>$(SolutionName)</TargetName>
     <IntDir>$(SolutionDir)Inter\$(ProjectName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)Dependencies\FMODstudio\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
