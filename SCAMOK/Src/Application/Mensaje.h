@@ -3,7 +3,7 @@
 #pragma once
 
 enum Tipo{ Render, Fisica, Logica, Input, AnimationM, Audio, IA, Gui, Mana,Consumible };
-enum SubTipo { Musica, Rotar, Escalar, Salto, Mover, InitFis, Reposicionar, Orientar, OrientaCamara, Effect, Trigge, Dispara, Nulo, 
+enum SubTipo { Musica, Rotar, Escalar, Salto, Mover, InitFis, Reposicionar,ReposicionAudio,ReposicionListener, Orientar, OrientaCamara, Effect, Trigge, Dispara, Nulo, 
 	InitGui, CambiaVida, CambiaMana, DoPower,GetPower, Inicializado, Colision,Candy,Muffin};
 
 

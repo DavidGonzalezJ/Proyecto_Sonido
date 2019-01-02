@@ -13,6 +13,7 @@
 #include "LifeComponent.h"
 #include "ManaComponent.h"
 #include "ConsumibleComponent.h"
+#include "SoundListener.h"
 Entidad::Entidad(Estado* pEstado): pEstado(pEstado){
 	cont++;
 	activo = true;
@@ -156,10 +157,11 @@ bool Entidad::añadeComponenteLogico(std::string component) {
 	return true;
 }
 
-
 bool Entidad::añadeComponenteSM(std::string component, void* sys) {
 	if (component == "SoundManager")
 		componentes.insert(std::make_pair("SoundManager", new SoundManager(this, (FMOD::System*)sys)));
+	else if(component == "SoundListener")
+		componentes.insert(std::make_pair("SoundListener", new SoundListener(this, (FMOD::System*)sys)));
 	return true;
 }
 

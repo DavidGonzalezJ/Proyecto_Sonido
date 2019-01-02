@@ -60,6 +60,7 @@ void EstadoJuego::init() {
 	entidades.insert(std::make_pair("Alaia", new Entidad(this, "Alaia")));
 	entidades.insert(std::make_pair("camera", new Entidad(this, "camera")));
 
+	
 
 	Mensaje msg(Tipo::Fisica, "80/30/0", SubTipo::Reposicionar,8);
 	msg.setMsgInfo(entidades.at("Alaia"), entidades.at("Alaia"));
@@ -143,6 +144,9 @@ void EstadoJuego::init() {
 	entidades.insert(std::make_pair("SoundManager", aux3));
 	Mensaje playM(Tipo::Audio, "Play/wii.mp3", SubTipo::Musica);
 	mensajes.push(playM);
+
+	//Añado el componente SoundListener a Alaia
+	entidades.at("Alaia")->añadeComponenteSM("SoundListener", system);
 
 
 	// Luz por defecto

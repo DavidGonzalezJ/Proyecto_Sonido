@@ -31,6 +31,7 @@
     <ClCompile Include="..\..\Src\Application\LifeComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\ManaComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\ProyectoBasico.cpp" />
+    <ClCompile Include="..\..\Src\Application\SoundListener.cpp" />
     <ClCompile Include="..\..\Src\Application\SoundManager.cpp" />
     <ClCompile Include="..\..\Src\Application\Transform.cpp" />
   </ItemGroup>
@@ -56,6 +57,7 @@
     <ClInclude Include="..\..\Src\Application\LifeComponent.h" />
     <ClInclude Include="..\..\Src\Application\ManaComponent.h" />
     <ClInclude Include="..\..\Src\Application\Mensaje.h" />
+    <ClInclude Include="..\..\Src\Application\SoundListener.h" />
     <ClInclude Include="..\..\Src\Application\SoundManager.h" />
     <ClInclude Include="..\..\Src\Application\Transform.h" />
   </ItemGroup>
