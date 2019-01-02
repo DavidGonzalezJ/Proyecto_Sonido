@@ -37,10 +37,17 @@ void SoundListener::Update(float deltaTime, Mensaje const & msj)
 			float x = std::stof(xS);
 			float y = std::stof(yS);
 			float z = std::stof(zS);
+			FMOD_VECTOR poss = { x,y,z }, up = { 0,1,0 }, vel = { 0,0,0 };
+			if (x == y && y == z  && z == 0) {
+				system->get3DListenerAttributes(0, &poss, NULL, NULL, NULL);
+			}
 			float fx = std::stof(fxS);
 			float fy = std::stof(fyS);
 			float fz = std::stof(fzS);
-			FMOD_VECTOR poss = { x,y,z }, up = { 0,1,0 }, forward = { fx,fy,fz }, vel = {0,0,0};
+			FMOD_VECTOR forward = { fx,fy,fz };
+			if (fx == fy && fy == fz && fz == 0) {
+				system->get3DListenerAttributes(0, NULL, NULL, &forward, NULL);
+			}
 
 			system->set3DListenerAttributes(0, &poss, &vel, &forward, &up);
 			system->update();

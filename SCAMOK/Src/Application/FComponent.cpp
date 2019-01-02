@@ -172,9 +172,9 @@ void FComponent::Update(float deltaTime, Mensaje const & msj) {
 						timePas += deltaTime;
 						if (pEntidad->getNombreNodo() == "Alaia") {
 							float px = body->getCenterOfMassPosition().getX(), py = body->getCenterOfMassPosition().getY(), pz = body->getCenterOfMassPosition().getZ();
-							float fx = body->getOrientation().getX(), fy = body->getOrientation().getY(), fz = body->getOrientation().getZ();
+							//float fx = body->getOrientation().getX(), fy = body->getOrientation().getY(), fz = body->getOrientation().getZ();
 							std::string pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz) + "/";
-							std::string forward = std::to_string(fx) + "/" + std::to_string(fy) + "/" + std::to_string(fz);
+							std::string forward = "0/0/0";
 							Mensaje ms(Tipo::Audio,pos + forward , SubTipo::ReposicionListener);
 							pEntidad->getPEstado()->addMsg(ms);
 
