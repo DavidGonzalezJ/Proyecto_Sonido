@@ -156,7 +156,14 @@ void EstadoJuego::init() {
 	light = scnMgr->createLight("MainLight");
 	light->setPosition(20, 50, 50);
 	
-
+	Entidad *aux9 = new Entidad(this);
+	aux9->añadeComponenteGrafico("Cube", "Cube");
+	aux9->añadeComponenteFisico(0, 0, 0, false, tipoFisica::Estatico, 100);
+	entidades.insert(std::make_pair("Cube", aux9));
+	Mensaje ms9(Tipo::Fisica, "80/5/80", SubTipo::Reposicionar, 8);
+	ms9.setMsgInfo(entidades.at("Cube"), entidades.at("Cube"));
+	mensajes.push(ms9);
+	aux9->añadeComponenteSM("OclusionComponent", system);
 
 
 #pragma endregion InitOgre
