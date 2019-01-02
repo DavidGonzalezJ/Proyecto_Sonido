@@ -9,6 +9,7 @@ SoundManager::SoundManager(Entidad* pEnt, FMOD::System* sys) : Componente(pEnt){
 	system = sys;
 	cargaAudio("../Media/Reverb/Reverb.wav");
 	cargarAssetsAudio();
+	rev = 0;
 } 
 SoundManager::~SoundManager() { 
 
@@ -32,6 +33,7 @@ SoundManager::~SoundManager() {
 	result = reverbUnit->release();
 	result = reverbGroup->removeDSP(reverbUnit);
 	result = reverbUnit->disconnectAll(true, true);
+	//actualRev->release();
 } 
 
 void::SoundManager::cargarAssetsAudio() {
@@ -93,6 +95,31 @@ void::SoundManager::cargarAssetsAudio() {
 	}
 	else {
 		std::cout << "Handle invalido\n";
+	}
+}
+
+void SoundManager::reverbSwap()
+{
+	rev = ++rev % 3;
+	if (rev == 0) {
+		actualRev->setActive(false);
+	}
+	else if (rev == 1) {
+		system->createReverb3D(&actualRev);
+		FMOD_REVERB_PROPERTIES p = FMOD_PRESET_MOUNTAINS;
+		actualRev->setProperties(&p);
+		FMOD_VECTOR pos = { 0,0,0 };
+		actualRev->set3DAttributes(&pos, 5000.0, 10000.0);
+		actualRev->setActive(true);
+	}
+	else {
+		system->createReverb3D(&actualRev);
+		FMOD_REVERB_PROPERTIES p = FMOD_PRESET_UNDERWATER;
+		actualRev->setProperties(&p);
+		FMOD_VECTOR pos = { 0,0,0 };
+		actualRev->set3DAttributes(&pos, 5000.0, 10000.0);
+		actualRev->setActive(true);
+
 	}
 }
 
@@ -274,6 +301,9 @@ void SoundManager::Update(float deltaTime, Mensaje const & msj) {
 			if (accion == "Play") {
 				reproduceFx(fx, std::stof(xS), std::stof(yS),std::stof(zS),0);
 			}
+		}
+		if (msg.getSubTipo() == SubTipo::ReverbChange) {
+			reverbSwap();
 		}
 	}
 }

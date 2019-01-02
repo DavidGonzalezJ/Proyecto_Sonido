@@ -378,6 +378,10 @@ void EstadoJuego::keyPressed(std::string s) {
 
 
 	}
+	else if (s == "6") {
+		Mensaje msEfect(Tipo::Audio, "", SubTipo::ReverbChange);
+		entidades.at("SoundManager")->Update(16, msEfect);
+	}
 	else if (s == "7") {
 			EstadoMenu * pEstado;
 			FMOD_VECTOR sitio;

@@ -33,6 +33,11 @@ private:
 	std::map<std::string, FMOD::Sound*> vfx;
 	std::map<std::string, FMOD::Sound*> vmusic;
 
+	//Cambio de reverb
+	void reverbSwap();
+	FMOD::Reverb3D* actualRev;
+	int rev;
+
 	void cargaAudio(std::string irPath);
 	void cargarAssetsAudio();
 }; 
