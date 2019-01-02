@@ -52,7 +52,10 @@ void EstadoMenu::opciones()
 
 void EstadoMenu::estadoAnt()
 {
-	std::string pos = "0/0/0";
+	FMOD_VECTOR sitio;
+	system->get3DListenerAttributes(0, &sitio, NULL, NULL, NULL);
+	std::string pos = std::to_string(sitio.x) + "/" + std::to_string(sitio.y) + "/" + std::to_string(sitio.z);
+
 	Mensaje msEfect2(Tipo::Audio, "Play/click.wav/" + pos, SubTipo::Effect);
 	
 	game_->quitaEstado();
@@ -67,7 +70,11 @@ void EstadoMenu::level1()
 	Mensaje playM(Tipo::Audio, "Stop/wii.mp3", SubTipo::Musica);
 	mensajes.push(playM);
 	update(0.17);
-	std::string pos = "0/0/0";
+	
+	FMOD_VECTOR sitio;
+	system->get3DListenerAttributes(0, &sitio, NULL, NULL, NULL);
+	std::string pos = std::to_string(sitio.x) + "/" + std::to_string(sitio.y) + "/" + std::to_string(sitio.z);
+
 	Mensaje msEfect2(Tipo::Audio, "Play/click.wav/" + pos, SubTipo::Effect);
 	entidades.at("SoundManager")->Update(16, msEfect2);
 
@@ -89,7 +96,11 @@ void EstadoMenu::restart()
 void EstadoMenu::creditos()
 {
 	EstadoMenu* estado = new EstadoMenu(scnMgr, mWin, system, game_, "creditos");
-	std::string pos = "0/0/0";
+	
+	FMOD_VECTOR sitio;
+	system->get3DListenerAttributes(0, &sitio, NULL, NULL, NULL);
+	std::string pos = std::to_string(sitio.x) + "/" + std::to_string(sitio.y) + "/" + std::to_string(sitio.z);
+
 	Mensaje msEfect2(Tipo::Audio, "Play/click.wav/" + pos, SubTipo::Effect);
 	game_->cambiaEstado(estado);
 }
@@ -127,7 +138,10 @@ void EstadoMenu::initMenuPause()
 
 void EstadoMenu::initCreditos()
 {
-	std::string pos = "500/1000/500";
+	FMOD_VECTOR sitio;
+	system->get3DListenerAttributes(0, &sitio, NULL, NULL, NULL);
+	std::string pos = std::to_string(sitio.x) + "/" + std::to_string(sitio.y) + "/" + std::to_string(sitio.z);
+
 	Mensaje msEfect(Tipo::Audio, "Play/item.wav/" + pos, SubTipo::Effect);
 	game_->pEstados.top()->getEntidad("SoundManager")->Update(16, msEfect);
 	
@@ -149,7 +163,11 @@ void EstadoMenu::initPpal()
 	entidades.insert(std::make_pair("SoundManager", aux3));
 	Mensaje playM(Tipo::Audio, "Play/ppal.mp3", SubTipo::Musica);
 	mensajes.push(playM);
-	std::string pos = "500/1000/500";
+
+	FMOD_VECTOR sitio;
+	system->get3DListenerAttributes(0, &sitio, NULL, NULL, NULL);
+	std::string pos = std::to_string(sitio.x) + "/" + std::to_string(sitio.y) + "/" + std::to_string(sitio.z);
+
 	Mensaje msEfect(Tipo::Audio, "Play/item.wav/" + pos, SubTipo::Effect);
 	mensajes.push(msEfect);
 

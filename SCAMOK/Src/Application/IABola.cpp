@@ -63,7 +63,14 @@ void IABola::Update(float deltaTime, Mensaje const & msj) {
 				}
 				else if (state == Die) {
 					die();
-					std::string pos = "0/0/0";
+					FComponent* body = dynamic_cast<FComponent*>(pEntidad->getComponente("Fisico"));
+					std::string pos;
+					if (body == nullptr)
+						pos = "0/0/0";
+					else {
+						float px = body->getRigidBody()->getCenterOfMassPosition().getX(), py = body->getRigidBody()->getCenterOfMassPosition().getY(), pz = body->getRigidBody()->getCenterOfMassPosition().getZ();
+						pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
+					}
 					Mensaje msEfect2(Tipo::Audio, "Play/danoBola.wav/" + pos, SubTipo::Effect);
 					pEntidad->getPEstado()->addMsg(msEfect2);
 
@@ -125,6 +132,21 @@ void IABola::wander()
 	Ogre::Vector3 aux = Ogre::Vector3(x, 0, z);
 	node->setOrientation(pEntidad->getPEstado()->getScnManager()->getSceneNode("GNodeAlaia")->getOrientation());
 	node->lookAt(aux, Ogre::Node::TS_LOCAL, Ogre::Vector3::UNIT_Z);
+
+	int v1 = rand() % 100;
+	if (v1 == 27) {
+		std::string pos;
+		FComponent* body = dynamic_cast<FComponent*>(pEntidad->getComponente("Fisico"));
+		if (body == nullptr)
+			pos = "0/0/0";
+		else {
+			float px = body->getRigidBody()->getCenterOfMassPosition().getX(), py = body->getRigidBody()->getCenterOfMassPosition().getY(), pz = body->getRigidBody()->getCenterOfMassPosition().getZ();
+			pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
+		}
+		Mensaje msEfect2(Tipo::Audio, "Play/danoBola.wav/" + pos, SubTipo::Effect);
+		pEntidad->getPEstado()->addMsg(msEfect2);
+	}
+
 }
 
 void IABola::stay()
@@ -188,7 +210,15 @@ void IABola::divide()
 
 		pEntidad->getPEstado()->getScnManager()->getSceneNode(auxBola)->scale(node->getScale().x, node->getScale().x, node->getScale().x);
 		numDiv++;
-		pos = "500/500/500";
+
+
+		FComponent* body = dynamic_cast<FComponent*>(pEntidad->getComponente("Fisico"));
+		if (body == nullptr)
+			pos = "0/0/0";
+		else {
+			float px = body->getRigidBody()->getCenterOfMassPosition().getX(), py = body->getRigidBody()->getCenterOfMassPosition().getY(), pz = body->getRigidBody()->getCenterOfMassPosition().getZ();
+			pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
+		}
 		Mensaje msEfect2(Tipo::Audio, "Play/division.wav/" + pos, SubTipo::Effect);
 		pEntidad->getPEstado()->addMsg(msEfect2);
 		

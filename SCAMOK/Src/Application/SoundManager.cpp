@@ -57,7 +57,7 @@ void::SoundManager::cargarAssetsAudio() {
 					std::string aux2;
 					aux2.assign(cabecera); aux2.append(aux);
 					result = system->createSound(aux2.c_str(), FMOD_3D, 0, &sound);
-					sound->set3DMinMaxDistance(5.0f, 5000.0f);
+					sound->set3DMinMaxDistance(40.0f, 5000.0f);
 					vfx.insert(std::pair<std::string, FMOD::Sound*>(b, sound));
 				}
 
@@ -82,7 +82,7 @@ void::SoundManager::cargarAssetsAudio() {
 				if (aux[0] != '.') {
 					std::string aux2;
 					aux2.assign(cabecera); aux2.append(aux);
-					result = system->createSound(aux2.c_str(), FMOD_3D, 0, &sound);
+					result = system->createSound(aux2.c_str(), FMOD_2D, 0, &sound);
 					sound->set3DMinMaxDistance(5.0f, 5000.0f);
 					vmusic.insert(std::pair<std::string, FMOD::Sound*>(b, sound));
 				}
@@ -103,8 +103,8 @@ void SoundManager::cargaAudio(std::string irPath) {
 	reverbConnectionAmbM.resize(6);
 	reverbConnectionfx.resize(12);
 	FMOD_RESULT result;
-	result =system->createChannelGroup("reverb", &reverbGroup);
-	result =system->createChannelGroup("main", &mainGroup);
+	result = system->createChannelGroup("reverb", &reverbGroup);
+	result = system->createChannelGroup("main", &mainGroup);
 	/*
 	Creamos el recurso dcp y lo añadimos a la reverb
 	*/
@@ -164,7 +164,9 @@ void SoundManager::cargaAudio(std::string irPath) {
 void SoundManager::reproduceFx(std::string fx, float x, float y, float z, float wet) {
 
 
-	FMOD_VECTOR pos = { x *0.01f, y*0.01f, z*0.1f };
+	//FMOD_VECTOR pos = { x *0.01f, y*0.01f, z*0.1f };
+	FMOD_VECTOR pos = { x, y, z };
+
 	FMOD_VECTOR vel = { 0.0f, 0.0f, 0.0f };
 	FMOD_RESULT result;
 
@@ -207,9 +209,7 @@ void SoundManager::reproduceFx(std::string fx, float x, float y, float z, float 
 			}
 		}
 	}
-
 	system->update();
-
 }
 
 void SoundManager::reproduceAmbM(std::string amb, float wet, bool fade) {
@@ -229,7 +229,7 @@ void SoundManager::reproduceAmbM(std::string amb, float wet, bool fade) {
 			cMA[i]->getDSPClock(NULL, &parentclock);
 			cMA[i]->addFadePoint(parentclock, 0.0f);
 			cMA[i]->addFadePoint(parentclock + 4096, 1.0f);
-			cMA[i]->setVolume(0.24);
+			cMA[i]->setVolume(0.1);
 		}
 		cMA[i]->getDSP(FMOD_CHANNELCONTROL_DSP_HEAD, &channelHead);
 		reverbUnit->addInput(channelHead, &reverbConnectionAmbM[i], FMOD_DSPCONNECTION_TYPE_SEND);

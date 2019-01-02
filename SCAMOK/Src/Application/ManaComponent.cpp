@@ -1,6 +1,7 @@
 #include "ManaComponent.h"  
 #include "OgreParticleSystem.h"
 #include "OgreParticleEmitter.h"
+#include "FComponent.h"
 
 ManaComponent::ManaComponent(Entidad* pEnt) : Componente(pEnt) 
 {
@@ -92,10 +93,16 @@ void ManaComponent::Update(float deltaTime, Mensaje const & msj)
 					restaPower();
 
 				}
-				std::string pos = "500/1000/500";
+				FComponent* body = dynamic_cast<FComponent*>(pEntidad->getComponente("Fisico"));
+				std::string pos;
+				if (body == nullptr)
+					pos = "0/0/0";
+				else {
+					float px = body->getRigidBody()->getCenterOfMassPosition().getX(), py = body->getRigidBody()->getCenterOfMassPosition().getY(), pz = body->getRigidBody()->getCenterOfMassPosition().getZ();
+					pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
+				}
 				Mensaje msEfect(Tipo::Audio, "Play/bolaFuego.wav/" + pos, SubTipo::Effect);
 				pEntidad->getPEstado()->addMsg(msEfect);
-				pos = "0/0/0";
 				Mensaje msEfect2(Tipo::Audio, "Play/bolaFuegoRisa.wav/" + pos, SubTipo::Effect);
 				pEntidad->getPEstado()->addMsg(msEfect2);
 			}

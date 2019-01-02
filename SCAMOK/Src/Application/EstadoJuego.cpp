@@ -5,6 +5,7 @@
 #include "OgreParticleSystem.h"
 #include "Juego.h"
 #include "EstadoMenu.h"
+#include "FComponent.h"
 
 static std::vector<std::string> colisiones;
 static std::string anteriorRec = " ", anteriorEmi =" ";
@@ -379,7 +380,10 @@ void EstadoJuego::keyPressed(std::string s) {
 	}
 	else if (s == "7") {
 			EstadoMenu * pEstado;
-			std::string pos = "500/1000/500";
+			FMOD_VECTOR sitio;
+			system->get3DListenerAttributes(0, &sitio, NULL, NULL, NULL);
+			std::string pos = std::to_string(sitio.x) + "/" + std::to_string(sitio.y) + "/" + std::to_string(sitio.z);
+
 			Mensaje msEfect(Tipo::Audio, "Play/item.wav/" + pos, SubTipo::Effect);
 			
 			entidades.at("SoundManager")->Update(16, msEfect);

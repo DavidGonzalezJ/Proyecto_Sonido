@@ -181,7 +181,7 @@ void FComponent::Update(float deltaTime, Mensaje const & msj) {
 							if (timePas >= 100 && abs(vel.getY()) < 0.1) {
 								timePas = 0;
 								int r = rand() % 4 + 1;
-								std::string paso = "Play/pasos" + std::to_string(r) + ".wav/" + "0/0/0";
+								std::string paso = "Play/pasos" + std::to_string(r) + ".wav/" + pos;
 								Mensaje msEfect(Tipo::Audio, paso, SubTipo::Effect);
 								pEntidad->getPEstado()->addMsg(msEfect);
 							}
@@ -189,7 +189,8 @@ void FComponent::Update(float deltaTime, Mensaje const & msj) {
 					}
 					else if (msg.getSubTipo() == SubTipo::Salto) {
 						if ((int)body->getLinearVelocity().getY() == 0) {
-							std::string pos = "0/0/0";
+							float px = body->getCenterOfMassPosition().getX(), py = body->getCenterOfMassPosition().getY(), pz = body->getCenterOfMassPosition().getZ();
+							std::string pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
 							Mensaje msEfect(Tipo::Audio, "Play/salto.wav/" + pos, SubTipo::Effect);
 							pEntidad->getPEstado()->addMsg(msEfect);
 							body->activate(true);
