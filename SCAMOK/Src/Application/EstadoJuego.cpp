@@ -6,6 +6,7 @@
 #include "Juego.h"
 #include "EstadoMenu.h"
 #include "FComponent.h"
+#include "GComponent.h"
 
 static std::vector<std::string> colisiones;
 static std::string anteriorRec = " ", anteriorEmi =" ";
@@ -158,6 +159,8 @@ void EstadoJuego::init() {
 	
 	Entidad *aux9 = new Entidad(this);
 	aux9->añadeComponenteGrafico("Cube", "Cube");
+	GComponent* g = static_cast<GComponent*>( aux9->getComponente("Grafico"));
+	g->scale(160.0, 15.0, 2.0);
 	aux9->añadeComponenteFisico(0, 0, 0, false, tipoFisica::Estatico, 100);
 	entidades.insert(std::make_pair("Cube", aux9));
 	Mensaje ms9(Tipo::Fisica, "80/5/80", SubTipo::Reposicionar, 8);

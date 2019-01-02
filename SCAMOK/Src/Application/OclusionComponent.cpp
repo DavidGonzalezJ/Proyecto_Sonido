@@ -11,14 +11,22 @@ OclusionComponent::OclusionComponent(Entidad* pEntidad, FMOD::System* sys):Compo
 
 
 	FMOD_VECTOR vertices[4];
-	vertices[0] = { posN.x - v.x / 2,posN.y + v.y / 2,posN.z };
-	vertices[1] = { posN.x - v.x / 2,posN.y - v.y / 2,posN.z };
-	vertices[2] = { posN.x + v.x / 2,posN.y - v.y / 2,posN.z };
-	vertices[3] = { posN.x + v.x / 2,posN.y + v.y / 2,posN.z };
-	geometry->addPolygon(0.7, 0.5, true, 4, vertices, &polygonIndex);
+	vertices[0] = { posN.x - 80*v.x,posN.y + 80*v.y,posN.z-2 };
+	vertices[1] = { posN.x - 80*v.x,posN.y - 80*v.y,posN.z-2 };
+	vertices[2] = { posN.x + 80*v.x,posN.y - 80*v.y,posN.z-2 };
+	vertices[3] = { posN.x + 80*v.x,posN.y + 80*v.y,posN.z-2 };
+	geometry->addPolygon(1.0, 1.0, true, 4, vertices, &polygonIndex);
+	FMOD_VECTOR vertices2[4];
+	vertices2[0] = { posN.x - 80 * v.x,posN.y + 80 * v.y,posN.z + 2 };
+	vertices2[1] = { posN.x - 80 * v.x,posN.y - 80 * v.y,posN.z + 2 };
+	vertices2[2] = { posN.x + 80 * v.x,posN.y - 80 * v.y,posN.z + 2 };
+	vertices2[3] = { posN.x + 80 * v.x,posN.y + 80 * v.y,posN.z + 2 };
+	int l;
+	geometry->addPolygon(1.0, 1.0, true, 4, vertices, &l);
 	
 	FMOD_VECTOR pos = { posN.x,posN.y,posN.z };
 	geometry->setPosition(&pos);
+	system->update();
 } 
 OclusionComponent::~OclusionComponent() { 
 } 
