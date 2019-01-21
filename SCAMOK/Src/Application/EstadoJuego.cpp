@@ -119,7 +119,7 @@ void EstadoJuego::init() {
 	Mensaje ms1_S(Tipo::Audio, "Play/cancion1.mp3/25/5/10", SubTipo::Effect);
 	mensajes.push(ms1_S);
 
-	/*
+	
 	Entidad* aux1 = new Entidad(this);
 	aux1->añadeComponenteGrafico("stone","stone0");
 	aux1->añadeComponenteFisico(0, 0, 0, false, tipoFisica::Kinematico, 1);
@@ -129,7 +129,7 @@ void EstadoJuego::init() {
 	ms.setMsgInfo(entidades.at("stone0"), entidades.at("stone0"));
 	mensajes.push(ms);
 
-	Entidad* enem2 = new Entidad(this);
+	/*Entidad* enem2 = new Entidad(this);
 	string auxBola = factoria->create("stone");
 	enem2->setNombreNodo(auxBola);
 

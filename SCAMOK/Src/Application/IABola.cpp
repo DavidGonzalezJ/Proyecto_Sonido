@@ -71,6 +71,7 @@ void IABola::Update(float deltaTime, Mensaje const & msj) {
 						float px = body->getRigidBody()->getCenterOfMassPosition().getX(), py = body->getRigidBody()->getCenterOfMassPosition().getY(), pz = body->getRigidBody()->getCenterOfMassPosition().getZ();
 						pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
 					}
+						std::cout<<"Posicion" << pos;
 					Mensaje msEfect2(Tipo::Audio, "Play/danoBola.wav/" + pos, SubTipo::Effect);
 					pEntidad->getPEstado()->addMsg(msEfect2);
 
@@ -143,6 +144,8 @@ void IABola::wander()
 			float px = body->getRigidBody()->getCenterOfMassPosition().getX(), py = body->getRigidBody()->getCenterOfMassPosition().getY(), pz = body->getRigidBody()->getCenterOfMassPosition().getZ();
 			pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
 		}
+		std::cout << "Posicion" << pos;
+
 		Mensaje msEfect2(Tipo::Audio, "Play/danoBola.wav/" + pos, SubTipo::Effect);
 		pEntidad->getPEstado()->addMsg(msEfect2);
 	}
