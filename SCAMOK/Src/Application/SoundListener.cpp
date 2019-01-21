@@ -1,5 +1,6 @@
 #include "SoundListener.h"
 #include <string>
+#include <iostream>
  
 SoundListener::SoundListener(Entidad * pEntidad,FMOD::System* sys) : Componente(pEntidad)
 {
@@ -38,6 +39,7 @@ void SoundListener::Update(float deltaTime, Mensaje const & msj)
 			float y = std::stof(yS);
 			float z = std::stof(zS);
 			FMOD_VECTOR poss = { x,y,z }, up = { 0,1,0 }, vel = { 0,0,0 };
+
 			if (x == y && y == z  && z == 0) {
 				system->get3DListenerAttributes(0, &poss, NULL, NULL, NULL);
 			}
@@ -50,7 +52,14 @@ void SoundListener::Update(float deltaTime, Mensaje const & msj)
 			}
 
 			system->set3DListenerAttributes(0, &poss, &vel, &forward, &up);
+			FMOD_VECTOR p, f, u;
+			
 			system->update();
+			system->get3DListenerAttributes(0, &p, NULL, &f, &u);
+			std::cout << "_____________________________ \nX " << p.x << " Y " << p.y << " Z " << p.z << std::endl;
+			std::cout << "X " << f.x << " Y " << f.y << " Z " << f.z << std::endl;
+			std::cout << "X " << u.x << " Y " << u.y << " Z " << u.z<<"_____________________________ \n";
+			
 		}
 	}
 }

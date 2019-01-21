@@ -190,6 +190,7 @@ void FComponent::Update(float deltaTime, Mensaje const & msj) {
 					else if (msg.getSubTipo() == SubTipo::Salto) {
 						if ((int)body->getLinearVelocity().getY() == 0) {
 							float px = body->getCenterOfMassPosition().getX(), py = body->getCenterOfMassPosition().getY(), pz = body->getCenterOfMassPosition().getZ();
+							std::cout << "pX:  " << px << "py:  " << py << "  pz:  " << pz<<std::endl;
 							std::string pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
 							Mensaje msEfect(Tipo::Audio, "Play/salto.wav/" + pos, SubTipo::Effect);
 							pEntidad->getPEstado()->addMsg(msEfect);

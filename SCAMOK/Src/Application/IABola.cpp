@@ -49,7 +49,7 @@ void IABola::Update(float deltaTime, Mensaje const & msj) {
 					pS->setEmitting(true);
 					if (contDivide == valueWait) {
 						contDivide = 0;
-						divide();
+						//divide();
 						state = States::Wander;
 					}
 				}

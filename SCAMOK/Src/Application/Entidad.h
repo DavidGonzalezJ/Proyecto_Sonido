@@ -3,7 +3,7 @@
 #include <iterator>
 #include "Mensaje.h"
 #include <vector>
-
+#include "Ogre.h"
 
 class Estado;
 class Entidad{
@@ -23,7 +23,7 @@ public:
 	bool añadeAnimacion(std::string mesh, std::ifstream & fe);
 	bool añadeAnimacion(std::string name,bool enabled = true, bool loop = true);
 	bool añadeComponenteLogico(std::string component);
-	bool añadeComponenteSM(std::string component, void* sys);
+	bool añadeComponenteSM(std::string component, void* sys, Ogre::Vector3 pos = Ogre::Vector3::ZERO);
 	void setAnim(std::string const &s, bool loop = false, bool enabled = true, bool idle = false);
 	void destruyeComponenteGrafico();
 	void destroy() {

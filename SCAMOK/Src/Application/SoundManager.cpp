@@ -96,6 +96,15 @@ void::SoundManager::cargarAssetsAudio() {
 	else {
 		std::cout << "Handle invalido\n";
 	}
+
+	FMOD::Studio::Bank* masterBank = NULL;
+	system->loadBankFile(Common_MediaPath("Master Bank.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank);
+
+	FMOD::Studio::Bank* stringsBank = NULL;
+	system->loadBankFile(Common_MediaPath("Master Bank.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
+
+	FMOD::Studio::Bank* sfxBank = NULL;
+	system->loadBankFile(Common_MediaPath("Footsteeps.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
 }
 
 void SoundManager::reverbSwap()
@@ -189,11 +198,11 @@ void SoundManager::cargaAudio(std::string irPath) {
 }
 
 void SoundManager::reproduceFx(std::string fx, float x, float y, float z, float wet) {
-
-
-	//FMOD_VECTOR pos = { x *0.01f, y*0.01f, z*0.1f };
+	
+	//FMOD_VECTOR pos = { x *0.01f, y*0.01f, z*0.1f };f
 	FMOD_VECTOR pos = { x, y, z };
-
+		
+//	std::cout <<fx<< " X: " << x << " Y: " << y << " Z: " << z << std::endl;
 	FMOD_VECTOR vel = { 0.0f, 0.0f, 0.0f };
 	FMOD_RESULT result;
 
@@ -205,6 +214,7 @@ void SoundManager::reproduceFx(std::string fx, float x, float y, float z, float 
 	if (!cOcupied) {
 		system->playSound(s, mainGroup, false, &cFx[0]);
 		result = cFx[0]->set3DAttributes(&pos, &vel);
+		if (result != 0) std::cout << "ATENCIOOOOOOOON-----------------------\n";
 		cFx[0]->getDSP(FMOD_CHANNELCONTROL_DSP_HEAD, &channelHead);
 		reverbUnit->addInput(channelHead, &reverbConnectionfx[0], FMOD_DSPCONNECTION_TYPE_SEND);
 		reverbConnectionfx[0]->setMix(wet);

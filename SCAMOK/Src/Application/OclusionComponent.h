@@ -5,7 +5,7 @@
 
 class OclusionComponent: public Componente { 
 public: 
-	OclusionComponent(Entidad* pEntidad, FMOD::System* sys);
+	OclusionComponent(Entidad* pEntidad, FMOD::System* sys, Ogre::Vector3 pos = Ogre::Vector3::UNIT_X);
 	~OclusionComponent(); 
 
 private:

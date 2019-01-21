@@ -1,6 +1,7 @@
 #pragma once 
 #include "Camara.h"
-
+#include <iostream>
+#include <math.h>
 using namespace Ogre;
 Camara::Camara(Entidad * pEnt) : Componente(pEnt)
 {
@@ -44,11 +45,12 @@ void Camara::Update(float deltaTime, Mensaje const & msj) {
 			float x = std::stof(xS)* deltaTime*0.1;
 			float z = deltaTime * std::stof(zS)*0.1;
 
-			node->rotate(Ogre::Quaternion(Ogre::Degree(-x*2), Ogre::Vector3::UNIT_Y));
+			node->rotate(Ogre::Quaternion(Ogre::Degree(-x * 2), Ogre::Vector3::UNIT_Y));
 
-			float cX = node->getOrientation().xAxis().x, cY = node->getOrientation().yAxis().y, cZ = node->getOrientation().zAxis().z;
+			float cX = node->getOrientation().zAxis().x, cY = node->getOrientation().zAxis().y, cZ = node->getOrientation().zAxis().z;
 			std::string dir = "0/0/0/";
-			std::string forward = std::to_string(cX) + std::to_string(cY)+ std::to_string(cZ);
+			cY = 0;
+			std::string forward = std::to_string(cX*-1) +"/"+ std::to_string(cY) + "/" + std::to_string(cZ*-1);
 			Mensaje ms(Tipo::Audio, dir + forward, SubTipo::ReposicionListener);
 			pEntidad->getPEstado()->addMsg(ms);
 		}

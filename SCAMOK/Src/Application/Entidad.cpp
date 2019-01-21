@@ -158,13 +158,13 @@ bool Entidad::añadeComponenteLogico(std::string component) {
 	return true;
 }
 
-bool Entidad::añadeComponenteSM(std::string component, void* sys) {
+bool Entidad::añadeComponenteSM(std::string component, void* sys, Ogre::Vector3 pos) {
 	if (component == "SoundManager")
 		componentes.insert(std::make_pair("SoundManager", new SoundManager(this, (FMOD::System*)sys)));
 	else if(component == "SoundListener")
 		componentes.insert(std::make_pair("SoundListener", new SoundListener(this, (FMOD::System*)sys)));
 	else if(component == "OclusionComponent")
-		componentes.insert(std::make_pair("OclusionComponent", new OclusionComponent(this, (FMOD::System*)sys)));
+		componentes.insert(std::make_pair("OclusionComponent", new OclusionComponent(this, (FMOD::System*)sys, pos)));
 	return true;
 }
 

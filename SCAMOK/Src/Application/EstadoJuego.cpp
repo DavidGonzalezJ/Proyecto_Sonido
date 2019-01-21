@@ -118,9 +118,10 @@ void EstadoJuego::init() {
 	Mensaje ms1(Tipo::Fisica, "25/5/10", SubTipo::Reposicionar,8);
 	ms1.setMsgInfo(entidades.at("compcube"), entidades.at("compcube"));
 	mensajes.push(ms1);
+	Mensaje ms1_S(Tipo::Audio, "Play/cancion1.mp3/25/5/10", SubTipo::Effect);
+	mensajes.push(ms1_S);
 
-
-
+	/*
 	Entidad* aux1 = new Entidad(this);
 	aux1->añadeComponenteGrafico("stone","stone0");
 	aux1->añadeComponenteFisico(0, 0, 0, false, tipoFisica::Kinematico, 1);
@@ -140,7 +141,7 @@ void EstadoJuego::init() {
 	addEntidad(auxBola, enem2);
 	Mensaje mstone(Tipo::Fisica, "30/50/50", SubTipo::Reposicionar);
 	mstone.setMsgInfo(enem2, enem2);
-	addMsg(mstone);
+	addMsg(mstone);*/
 
 	Entidad* aux3 = new Entidad(this); aux3->añadeComponenteSM("SoundManager", system);
 	entidades.insert(std::make_pair("SoundManager", aux3));
@@ -166,7 +167,7 @@ void EstadoJuego::init() {
 	Mensaje ms9(Tipo::Fisica, "80/5/80", SubTipo::Reposicionar, 8);
 	ms9.setMsgInfo(entidades.at("Cube"), entidades.at("Cube"));
 	mensajes.push(ms9);
-	aux9->añadeComponenteSM("OclusionComponent", system);
+	aux9->añadeComponenteSM("OclusionComponent", system, Ogre::Vector3(80,5,80));
 
 
 #pragma endregion InitOgre
@@ -349,6 +350,7 @@ void EstadoJuego::joystickMoved(float x, float y, int js) {
 
 void EstadoJuego::keyPressed(std::string s) {
 	if (s == "0" || s == "salto") {
+		std::cout << "  x  " << scnMgr->getSceneNode("GNodeAlaia")->getPosition().x <<"  y  "<< scnMgr->getSceneNode("GNodeAlaia")->getPosition().y <<"  z  " <<scnMgr->getSceneNode("GNodeAlaia")->getPosition().z << std::endl;
 		Mensaje msg(Tipo::Fisica, "", SubTipo::Salto);
 		msg.setMsgInfo(entidades.at("Alaia"), entidades.at("Alaia"));
 		mensajes.push(msg);
