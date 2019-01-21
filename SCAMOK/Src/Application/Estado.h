@@ -29,7 +29,7 @@ class Juego;
 class Estado
 {
 public:
-		Estado(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::System* sys, Juego * game = nullptr);
+		Estado(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::Studio::System* sys, Juego * game = nullptr);
 	virtual ~Estado();
 
 
@@ -98,6 +98,7 @@ protected:
 	std::priority_queue <Mensaje> mensajes, bufer;
 	Fisic* fisicaManager;
 	FMOD::System* system;
+	FMOD::Studio::System* studioSystem;
 	bool noInput; int  contInput;
 
 

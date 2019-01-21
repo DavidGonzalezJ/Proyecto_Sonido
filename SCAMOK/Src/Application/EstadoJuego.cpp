@@ -39,14 +39,12 @@ bool collisionCallback(btManifoldPoint& cp, const btCollisionObjectWrapper* colO
 	}
 	return false;
 }
-EstadoJuego::EstadoJuego(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::System* sys, Juego* pJuego): Estado(mng, mWindow, sys, pJuego)
+EstadoJuego::EstadoJuego(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::Studio::System* sys, Juego* pJuego): Estado(mng, mWindow, sys, pJuego)
 {
-	
 	noInput = true; contInput = contDescartes=0;
 	gContactAddedCallback = collisionCallback;
 	anteriorEmi = anteriorRec = " ";
 	cargaGui();
-	
 }
 
 void EstadoJuego::init() {
@@ -143,10 +141,13 @@ void EstadoJuego::init() {
 	mstone.setMsgInfo(enem2, enem2);
 	addMsg(mstone);*/
 
-	Entidad* aux3 = new Entidad(this); aux3->añadeComponenteSM("SoundManager", system);
+	Entidad* aux3 = new Entidad(this); aux3->añadeComponenteSM("SoundManager", studioSystem);
 	entidades.insert(std::make_pair("SoundManager", aux3));
 	Mensaje playM(Tipo::Audio, "Play/wii.mp3", SubTipo::Musica);
 	mensajes.push(playM);
+
+	Mensaje Bank(Tipo::Audio, "", SubTipo::Inicializado);
+	mensajes.push(Bank);
 
 	//Añado el componente SoundListener a Alaia
 	entidades.at("Alaia")->añadeComponenteSM("SoundListener", system);
@@ -209,7 +210,7 @@ void EstadoJuego::cambiaEstado(std::string const & estado)
 {
 
 	if (estado == "GameOver") {
-		EstadoMenu* go = new EstadoMenu (scnMgr, mWin, system, game_, "GameOver");
+		EstadoMenu* go = new EstadoMenu (scnMgr, mWin, studioSystem, game_, "GameOver");
 		game_->cambiaEstado(go, true);
 	}
 }
@@ -324,8 +325,8 @@ void EstadoJuego::joystickMoved(float x, float y, int js) {
 	std::string sx, sy; sx = std::to_string(x); sy = std::to_string(y);
 	std::string s = sx + "/" + "0/" + sy;
 
-
 	if (js == 0) {
+	std::cout << "X:" << x << "Y: " << y<< std::endl;
 		Mensaje msgI(Tipo::Input, s, SubTipo::Mover);
 		mensajes.push(msgI);
 		Mensaje msgR(Tipo::Render, s, SubTipo::Orientar); //Look at de la camara
@@ -335,6 +336,11 @@ void EstadoJuego::joystickMoved(float x, float y, int js) {
 		
 		contInput = 0;
 
+		float param = max(abs(x),abs(y));
+		std::cout << param << std::endl;;
+		std::string mensaje = "Pasos/Velocidad/" + std::to_string(param);
+		Mensaje msEfect(Tipo::Audio, mensaje, SubTipo::Reposicionar);
+		mensajes.push(msEfect);
 	}
 	else if (js == 1) {
 		Mensaje msgI(Tipo::Input, s, SubTipo::OrientaCamara);
@@ -344,13 +350,17 @@ void EstadoJuego::joystickMoved(float x, float y, int js) {
 	else {
 		Mensaje msgF(Tipo::Fisica, s, SubTipo::Nulo);
 		mensajes.push(msgF);
+		/*float param = 0;
+		std::string mensaje = "Pasos/Velocidad/" + std::to_string(param);
+		Mensaje msEfect(Tipo::Audio, mensaje, SubTipo::Reposicionar);
+		mensajes.push(msEfect);*/
 	}
 
 }
 
 void EstadoJuego::keyPressed(std::string s) {
 	if (s == "0" || s == "salto") {
-		std::cout << "  x  " << scnMgr->getSceneNode("GNodeAlaia")->getPosition().x <<"  y  "<< scnMgr->getSceneNode("GNodeAlaia")->getPosition().y <<"  z  " <<scnMgr->getSceneNode("GNodeAlaia")->getPosition().z << std::endl;
+		//std::cout << "  x  " << scnMgr->getSceneNode("GNodeAlaia")->getPosition().x <<"  y  "<< scnMgr->getSceneNode("GNodeAlaia")->getPosition().y <<"  z  " <<scnMgr->getSceneNode("GNodeAlaia")->getPosition().z << std::endl;
 		Mensaje msg(Tipo::Fisica, "", SubTipo::Salto);
 		msg.setMsgInfo(entidades.at("Alaia"), entidades.at("Alaia"));
 		mensajes.push(msg);
@@ -403,7 +413,7 @@ void EstadoJuego::keyPressed(std::string s) {
 			Mensaje msEfect(Tipo::Audio, "Play/item.wav/" + pos, SubTipo::Effect);
 			
 			entidades.at("SoundManager")->Update(16, msEfect);
-			pEstado = new EstadoMenu(scnMgr, mWin, system, game_, "pause");
+			pEstado = new EstadoMenu(scnMgr, mWin, studioSystem, game_, "pause");
 			game_->cambiaEstado(pEstado);
 	}
 	

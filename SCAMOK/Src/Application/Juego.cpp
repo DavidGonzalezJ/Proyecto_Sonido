@@ -165,7 +165,7 @@ bool Juego::run(){
 		restart_ = false;
 	do {
 		scnMgr = root->createSceneManager(Ogre::ST_GENERIC);
-		EstadoMenu * pEstado = new EstadoMenu(scnMgr, mWindow, system, this);
+		EstadoMenu * pEstado = new EstadoMenu(scnMgr, mWindow, studioSystem, this);
 		
 		firstTime = true;
 		pEstados.push(pEstado);
@@ -224,7 +224,6 @@ bool Juego::run(){
 				aux->destroy();
 				delete aux;
 				borrar.pop();
-
 			}
 			
 			mWindow->removeAllViewports();
@@ -277,7 +276,7 @@ bool Juego::keyPressed(const OIS::KeyEvent& ke)
 	case OIS::KC_ESCAPE: exit = true;
 		break;
 	case OIS::KC_P:if (pEstados.size() == 1) {
-		pEstado = new EstadoMenu(scnMgr, mWindow, system, this,"pause");
+		pEstado = new EstadoMenu(scnMgr, mWindow, studioSystem, this,"pause");
 		pEstados.push(pEstado);
 	}
 		break;

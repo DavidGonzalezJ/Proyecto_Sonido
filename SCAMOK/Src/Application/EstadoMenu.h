@@ -4,7 +4,7 @@
 class EstadoMenu : public Estado
 {
 public:
-	EstadoMenu(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::System* sys, Juego* game = nullptr, std::string type = "ppal");
+	EstadoMenu(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::Studio::System* sys, Juego* game = nullptr, std::string type = "ppal");
 	virtual ~EstadoMenu();
 
 	virtual bool initCEGUI();

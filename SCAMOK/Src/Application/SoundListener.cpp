@@ -56,9 +56,9 @@ void SoundListener::Update(float deltaTime, Mensaje const & msj)
 			
 			system->update();
 			system->get3DListenerAttributes(0, &p, NULL, &f, &u);
-			std::cout << "_____________________________ \nX " << p.x << " Y " << p.y << " Z " << p.z << std::endl;
+			/*std::cout << "_____________________________ \nX " << p.x << " Y " << p.y << " Z " << p.z << std::endl;
 			std::cout << "X " << f.x << " Y " << f.y << " Z " << f.z << std::endl;
-			std::cout << "X " << u.x << " Y " << u.y << " Z " << u.z<<"_____________________________ \n";
+			std::cout << "X " << u.x << " Y " << u.y << " Z " << u.z<<"_____________________________ \n";*/
 			
 		}
 	}

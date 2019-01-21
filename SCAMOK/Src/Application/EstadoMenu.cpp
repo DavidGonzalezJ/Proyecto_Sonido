@@ -3,11 +3,10 @@
 #include "Juego.h"
 #include "FactoryBalas.h"
 
-EstadoMenu::EstadoMenu(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::System* sys, Juego* game, std::string type) : Estado(mng, mWindow, sys, game) {
+EstadoMenu::EstadoMenu(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::Studio::System* sys, Juego* game, std::string type) : Estado(mng, mWindow, sys, game) {
 	type_ = type;
 	initCEGUI();
 	factoria = new FactoryBalas();
-	
 }
 
 EstadoMenu::~EstadoMenu()
@@ -78,7 +77,7 @@ void EstadoMenu::level1()
 	Mensaje msEfect2(Tipo::Audio, "Play/click.wav/" + pos, SubTipo::Effect);
 	entidades.at("SoundManager")->Update(16, msEfect2);
 
-	EstadoJuego* estado = new EstadoJuego(scnMgr, mWin, system,game_);
+	EstadoJuego* estado = new EstadoJuego(scnMgr, mWin, studioSystem,game_);
 	game_->cambiaEstado(estado, true);
 }
 
@@ -95,7 +94,7 @@ void EstadoMenu::restart()
 
 void EstadoMenu::creditos()
 {
-	EstadoMenu* estado = new EstadoMenu(scnMgr, mWin, system, game_, "creditos");
+	EstadoMenu* estado = new EstadoMenu(scnMgr, mWin, studioSystem, game_, "creditos");
 	
 	FMOD_VECTOR sitio;
 	system->get3DListenerAttributes(0, &sitio, NULL, NULL, NULL);
@@ -159,7 +158,7 @@ void EstadoMenu::initOpciones()
 
 void EstadoMenu::initPpal()
 {
-	Entidad* aux3 = new Entidad(this); aux3->añadeComponenteSM("SoundManager", system);
+	Entidad* aux3 = new Entidad(this); aux3->añadeComponenteSM("SoundManager", studioSystem);
 	entidades.insert(std::make_pair("SoundManager", aux3));
 	Mensaje playM(Tipo::Audio, "Play/ppal.mp3", SubTipo::Musica);
 	mensajes.push(playM);

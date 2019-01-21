@@ -3,12 +3,13 @@
 #include "FactoryBalas.h"
 
 class EstadoMenu;
-Estado::Estado(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::System* sys, Juego* game){
+Estado::Estado(Ogre::SceneManager * mng, Ogre::RenderWindow* mWindow, FMOD::Studio::System* sys, Juego* game){
 
 	//Aqui montamos el mundo físico
 	scnMgr = mng;
 	mWin = mWindow;
-	system = sys;
+	studioSystem = sys;
+	sys->getLowLevelSystem(&system);
 	game_ = game;
 	fisicaManager = new Fisic();
 }

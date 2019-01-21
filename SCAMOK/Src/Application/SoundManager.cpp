@@ -4,9 +4,11 @@
 #include <iostream>
 #include <strsafe.h>
 #include <comdef.h>
- 
-SoundManager::SoundManager(Entidad* pEnt, FMOD::System* sys) : Componente(pEnt){
-	system = sys;
+
+SoundManager::SoundManager(Entidad* pEnt, FMOD::Studio::System* sys) : Componente(pEnt){
+	//system = sys;
+	studioSystem = sys;
+	sys->getLowLevelSystem(&system);
 	cargaAudio("../Media/Reverb/Reverb.wav");
 	cargarAssetsAudio();
 	rev = 0;
@@ -96,15 +98,16 @@ void::SoundManager::cargarAssetsAudio() {
 	else {
 		std::cout << "Handle invalido\n";
 	}
-
+	// Carganmos Bancos de sonidos
 	FMOD::Studio::Bank* masterBank = NULL;
-	system->loadBankFile(Common_MediaPath("Master Bank.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank);
+	(studioSystem->loadBankFile("../Media/BANKS/Master Bank.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank));
 
 	FMOD::Studio::Bank* stringsBank = NULL;
-	system->loadBankFile(Common_MediaPath("Master Bank.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
-
+	 (studioSystem->loadBankFile("../Media/BANKS/Master Bank.strings.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank));
+	
 	FMOD::Studio::Bank* sfxBank = NULL;
-	system->loadBankFile(Common_MediaPath("Footsteeps.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank);
+	(studioSystem->loadBankFile("../Media/BANKS/Pasos.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank));
+	
 }
 
 void SoundManager::reverbSwap()
@@ -249,6 +252,8 @@ void SoundManager::reproduceFx(std::string fx, float x, float y, float z, float 
 	system->update();
 }
 
+
+
 void SoundManager::reproduceAmbM(std::string amb, float wet, bool fade) {
 	bool cOcupied = false;
 	int i = 0;
@@ -274,10 +279,45 @@ void SoundManager::reproduceAmbM(std::string amb, float wet, bool fade) {
 	}
 
 }
+void SoundManager::reproduceInstance(std::string eventInstance, std::string paraName, float paramValue)
+{
+	eInstance.at("Pasos")->setParameterValue("Velocidad", paramValue);
+	system->update();
+}
+void SoundManager::createInstanceEvent(std::string evento, bool play)
+{
+	FMOD::Studio::EventDescription* steps = NULL;
+	string a = "event:/" + evento;
+	std::cout << "INICIALIZA EL EVENTO" << studioSystem->getEvent(a.c_str(),&steps);
+
+	FMOD::Studio::EventInstance* eventInstance = NULL;
+	steps->createInstance(&eventInstance);
+
+	//eventInstance->start();
+	eInstance.insert(std::pair <std::string, FMOD::Studio::EventInstance*> (evento, eventInstance));
+	eInstance.at("Pasos")->start();
+	eInstance.at("Pasos")->setParameterValue("Velocidad",1.0);
+	//pasos = eventInstance;
+
+	system->update();
+
+}
 void SoundManager::Update(float deltaTime, Mensaje const & msj) {
 	Componente::Update(deltaTime, msj);
 	Mensaje msg = msj;
 	if (msg.getTipo() == Tipo::Audio) {
+		if (msg.getSubTipo() == SubTipo::Inicializado) {
+			createInstanceEvent("Pasos");
+		}
+		if (msg.getSubTipo() == SubTipo::Reposicionar) {
+			int pos = msg.getMsg().find("/");
+			std::string eventInstance = msg.getMsg().substr(0, pos);
+			std::string aux = msg.getMsg().substr(pos + 1);
+			pos = aux.find("/");
+			std::string paraName = aux.substr(0,pos);
+			float paramValue = std::stof(aux.substr(pos + 1));
+			reproduceInstance(eventInstance, paraName, paramValue);
+		}
 		if (msg.getSubTipo() == SubTipo::Musica) {
 			int pos = msg.getMsg().find("/");
 			std::string accion = msg.getMsg().substr(0, pos);

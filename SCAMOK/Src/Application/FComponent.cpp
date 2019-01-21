@@ -172,7 +172,7 @@ void FComponent::Update(float deltaTime, Mensaje const & msj) {
 						timePas += deltaTime;
 						if (pEntidad->getNombreNodo() == "Alaia") {
 							float px = body->getCenterOfMassPosition().getX(), py = body->getCenterOfMassPosition().getY(), pz = body->getCenterOfMassPosition().getZ();
-							//float fx = body->getOrientation().getX(), fy = body->getOrientation().getY(), fz = body->getOrientation().getZ();
+
 							std::string pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz) + "/";
 							std::string forward = "0/0/0";
 							Mensaje ms(Tipo::Audio,pos + forward , SubTipo::ReposicionListener);
@@ -183,6 +183,9 @@ void FComponent::Update(float deltaTime, Mensaje const & msj) {
 								int r = rand() % 4 + 1;
 								std::string paso = "Play/pasos" + std::to_string(r) + ".wav/" + pos;
 								Mensaje msEfect(Tipo::Audio, paso, SubTipo::Effect);
+								//float param = sqrt(vel.getX()*vel.getX() + vel.getZ()*vel.getZ());
+								//std::string mensaje = "Pasos/Velocidad/" + std::to_string(param);
+								//Mensaje msEfect(Tipo::Audio, mensaje, SubTipo::Reposicionar);
 								pEntidad->getPEstado()->addMsg(msEfect);
 							}
 						}
@@ -190,7 +193,7 @@ void FComponent::Update(float deltaTime, Mensaje const & msj) {
 					else if (msg.getSubTipo() == SubTipo::Salto) {
 						if ((int)body->getLinearVelocity().getY() == 0) {
 							float px = body->getCenterOfMassPosition().getX(), py = body->getCenterOfMassPosition().getY(), pz = body->getCenterOfMassPosition().getZ();
-							std::cout << "pX:  " << px << "py:  " << py << "  pz:  " << pz<<std::endl;
+							//std::cout << "pX:  " << px << "py:  " << py << "  pz:  " << pz<<std::endl;
 							std::string pos = std::to_string(px) + "/" + std::to_string(py) + "/" + std::to_string(pz);
 							Mensaje msEfect(Tipo::Audio, "Play/salto.wav/" + pos, SubTipo::Effect);
 							pEntidad->getPEstado()->addMsg(msEfect);
